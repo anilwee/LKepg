@@ -1,0 +1,33 @@
+name: Daily Dialog TV EPG Builder
+
+on:
+  schedule:
+    - cron: "0 0 * * *"  # Runs daily at 00:00 UTC
+  workflow_dispatch:     # Allows manual run
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repo
+        uses: actions/checkout@v3
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: 📦 Install dependencies
+        run: pip install requests pytz
+
+      - name: ⚙️ Run EPG generation script
+        run: python epg_generator.py
+
+      - name: 🚀 Commit and push EPG
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add diaLK.xml
+          git commit -m "📺 Auto-update diaLK.xml EPG"
+          git push
