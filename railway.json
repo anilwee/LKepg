@@ -1,0 +1,11 @@
+{
+  "build": {
+    "env": {
+      "RAILWAY_PYTHON": "3.10"
+    },
+    "buildCommand": "pip install -r requirements.txt"
+  },
+  "start": {
+    "cmd": "python epg_generator.py"
+  }
+}
